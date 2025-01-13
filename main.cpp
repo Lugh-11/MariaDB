@@ -7,9 +7,11 @@ using namespace std;
 
 ifstream inputFile;
 vector <string> readInput ();
+string readOutput (string);
 
 int main()
 {
+    ofstream OutputFile;
     vector<string> query = readInput();
     for (string commands:query){
         cout << commands << endl;
@@ -21,6 +23,8 @@ int main()
         }
         else if (commands.find ("CREATE") != string::npos){
             cout << "CREATE" << endl;
+            string Output = readOutput(commands);
+            OutputFile.open(Output);
         }
         else if (commands.find ("TABLES") != string::npos){
             cout << "TABLES" << endl;
@@ -39,6 +43,9 @@ int main()
         }
         else if (commands.find ("DELETE") != string::npos){
             cout << "DELETE" << endl;
+        }
+        else if (commands.find("-1") != string::npos){
+            OutputFile.close();
         }
 
     }
@@ -65,7 +72,15 @@ vector <string> readInput ()
         }
 
         inputFile.close();
+        output.push_back("-1");
         }
 
     return output;
+}
+string readOutput (string OutputFileName)
+{
+    OutputFileName.erase(0,7);
+    cout << OutputFileName << endl;
+    return OutputFileName;
+
 }
