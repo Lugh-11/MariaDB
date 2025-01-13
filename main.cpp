@@ -7,15 +7,42 @@ using namespace std;
 
 ifstream inputFile;
 vector <string> readInput ();
-void parseAndGenerateOutput(const vector<string>& query);
 
 int main()
 {
     vector<string> query = readInput();
     for (string commands:query){
         cout << commands << endl;
+        if (commands.find ("CREATE TABLE") != string::npos){
+            cout << "CREATE TABLE" << endl;
+        }
+        else if (commands.find ("DATABASES") != string::npos){
+            cout << "DATABSES" << endl;
+        }
+        else if (commands.find ("CREATE") != string::npos){
+            cout << "CREATE" << endl;
+        }
+        else if (commands.find ("TABLES") != string::npos){
+            cout << "TABLES" << endl;
+        }
+        else if (commands.find ("INSERT INTO") != string::npos){
+            cout << "INSERT INTO" << endl;
+        }
+        else if (commands.find ("SELECT COUNT") != string::npos){
+            cout << "SELECT COUNT" << endl;
+        }
+        else if (commands.find ("SELECT") != string::npos){
+            cout << "SELECT" << endl;
+        }
+        else if (commands.find ("UPDATE") != string::npos){
+            cout << "UPDATE" << endl;
+        }
+        else if (commands.find ("DELETE") != string::npos){
+            cout << "DELETE" << endl;
+        }
+
     }
-    parseAndGenerateOutput(query);
+
     return 0;
 }
 
@@ -33,7 +60,7 @@ vector <string> readInput ()
         }
 
 
-        while(getline(inputFile,fileContents)){
+        while(getline(inputFile,fileContents,';')){
             output.push_back(fileContents);
         }
 
@@ -41,27 +68,4 @@ vector <string> readInput ()
         }
 
     return output;
-}
-
-void parseAndGenerateOutput( const vector <string> & query)
-{
-    for (const string& line : query)
-    {
-        if (line.find("CREATE") != string::npos)
-        {
-            cout << "> " << line << endl;
-        }
-        else if (line.find("DATABASES") != string::npos)
-        {
-            cout << "> " << line << endl;
-        }
-        else if (line.find("CREATE TABLE") != string::npos)
-        {
-            cout << "> " << line << endl;
-        }
-        else
-        {
-            cout << line << endl;
-        }
-    }
 }
