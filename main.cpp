@@ -8,23 +8,24 @@ using namespace std;
 ifstream inputFile;
 vector <string> readInput ();
 string readOutput (string);
+vector<vector<string>> CreateTable ();
+string tableName (string);
 
 int main()
 {
     ofstream OutputFile;
+    string nameOfTable;
     vector<string> query = readInput();
-    string lastCreatedTable;
 
     for (string commands:query){
         cout << commands << endl;
         if (commands.find ("CREATE TABLE") != string::npos){
             cout << "CREATE TABLE" << endl;
-            size_t start = commands.find("TABLE") + 6;
-            size_t end = commands.find("(", start);
-            lastCreatedTable = commands.substr(start, end - start);
+            nameOfTable = tableName(commands);
+            CreateTable();
         }
         else if (commands.find ("DATABASES") != string::npos){
-            cout << "DATABSES" << endl;
+            cout << "DATABASES" << endl;
         }
         else if (commands.find ("CREATE") != string::npos){
             cout << "CREATE" << endl;
@@ -32,9 +33,8 @@ int main()
             OutputFile.open(Output);
         }
         else if (commands.find ("TABLES") != string::npos){
-            cout << "TABLES" << endl;
-            if (!lastCreatedTable.empty()) {
-              cout << lastCreatedTable << endl;
+            if (!nameOfTable.empty()) {
+              cout << nameOfTable << endl;
             }
             else {
               cout << "No tables created yet." << endl;
@@ -68,10 +68,12 @@ vector <string> readInput ()
 {
     string fileName[3] = {"fileInput1.mdb" , "fileInput2.mdb" , "fileInput3.mdb"};
     string fileContents;
+    string filePath = "C:\\mariadb\\";
     vector<string> output;
 
     for (int count = 0 ; count < 3 ; count++) {
-        inputFile.open(fileName[count]);
+        string fullFilePath = filePath + fileName[count];
+        inputFile.open(fullFilePath);
         if (!inputFile){
             cout << "File not found" << endl ;
             continue;
@@ -84,6 +86,7 @@ vector <string> readInput ()
 
         inputFile.close();
         output.push_back("-1");
+        fullFilePath = filePath;
         }
 
     return output;
@@ -94,5 +97,17 @@ string readOutput (string OutputFileName)
     cout << OutputFileName << endl;
     return OutputFileName;
 
+}
+vector<vector<string>> CreateTable ()
+{
+    vector<vector<string>> table;
+    return table;
+}
+string tableName(string commands)
+{
+    size_t start = commands.find("TABLE") + 6;
+    size_t end = commands.find("(", start);
+    string lastCreatedTable = commands.substr(start, end - start);
+    return lastCreatedTable;
 }
 
