@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1736763350 source:c:\assignment 2\mariadb\main.cpp
-	<iostream>
-	<map>
-	<vector>
-	<sstream>
-	<string>
-
