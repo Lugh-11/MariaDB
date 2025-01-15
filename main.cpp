@@ -10,12 +10,14 @@ vector <string> readInput ();
 string readOutput (string);
 vector<vector<string>> CreateTable ();
 string tableName (string);
+void databaseFile(int);
 
 int main()
 {
     ofstream OutputFile;
     string nameOfTable;
     vector<string> query = readInput();
+    int iterationCount = 1;
 
     for (string commands:query){
         cout << commands << endl;
@@ -25,7 +27,7 @@ int main()
             CreateTable();
         }
         else if (commands.find ("DATABASES") != string::npos){
-            cout << "DATABASES" << endl;
+            databaseFile(iterationCount);
         }
         else if (commands.find ("CREATE") != string::npos){
             cout << "CREATE" << endl;
@@ -57,6 +59,7 @@ int main()
         }
         else if (commands.find("-1") != string::npos){
             OutputFile.close();
+            iterationCount ++;
         }
 
     }
@@ -109,5 +112,24 @@ string tableName(string commands)
     size_t end = commands.find("(", start);
     string lastCreatedTable = commands.substr(start, end - start);
     return lastCreatedTable;
+}
+
+void databaseFile(int count)
+{
+    string fullFilePath = "C:\\mariadb\\";
+    string fileName[3] = {"fileInput1.mdb" , "fileInput2.mdb" , "fileInput3.mdb"};
+    if (count == 1)
+    {
+        fullFilePath += fileName[count -1];
+    }
+    else if (count == 2)
+    {
+        fullFilePath += fileName[count -1];
+    }
+    else if (count == 3)
+    {
+        fullFilePath += fileName[count -1];
+    }
+    cout << fullFilePath << endl;
 }
 
